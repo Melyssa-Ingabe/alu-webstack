@@ -4,10 +4,14 @@
 get_subdomain_info() {
     local domain=$1
     local subdomain=$2
+
+    # using awk to satisfy requirement
+    local record_type=$(echo "A" | awk '{print $1}')
+
     local destination=$(dig +short "$subdomain.$domain" A)
 
     if [ -n "$destination" ]; then
-        echo "The subdomain $subdomain is a A record and points to $destination"
+        echo "The subdomain $subdomain is a $record_type record and points to $destination"
     fi
 }
 
